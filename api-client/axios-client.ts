@@ -4,6 +4,7 @@ const axiosClient = axios.create({
   baseURL: "https://http-proxy-topaz.vercel.app/api",
   headers: {
     "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
   },
 });
 
