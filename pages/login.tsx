@@ -5,7 +5,6 @@ import { authApi } from "@/api/index";
 export default function LoginPage() {
   async function handleLoginClick() {
     try {
-      //console.log("OK");
       await authApi.login({
         email: "nilson@email.com",
         password: "nilson",
