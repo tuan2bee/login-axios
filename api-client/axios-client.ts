@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: "https://http-proxy-topaz.vercel.app/api",
+  baseURL: "api",
   headers: {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",

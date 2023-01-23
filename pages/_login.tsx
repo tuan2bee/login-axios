@@ -16,7 +16,8 @@ export default function LoginPage() {
 
   async function handleGetProfileClick() {
     try {
-      await authApi.getProfile();
+      const data = await authApi.getProfile();
+      console.log(data);
     } catch (error) {
       console.log("failed to login", error);
     }
