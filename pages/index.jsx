@@ -47,14 +47,6 @@ const secondaryNavigation = [
   { name: "Help", href: "#", icon: QuestionMarkCircleIcon, click: false },
   { name: "Logout", href: "#", icon: ArrowLeftOnRectangleIcon, click: true },
 ];
-const tabs = [
-  { name: "General", href: "#", current: true },
-  { name: "Password", href: "#", current: false },
-  { name: "Notifications", href: "#", current: false },
-  { name: "Plan", href: "#", current: false },
-  { name: "Billing", href: "#", current: false },
-  { name: "Team Members", href: "#", current: false },
-];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -68,6 +60,23 @@ export default function Example() {
   const router = useRouter();
 
   const [query, setQuery] = useState("");
+
+  const [tabs, setTabs] = useState([
+    { name: "Next JS", category: "nextjs", href: "#", current: false },
+    { name: "Password", category: "password", href: "#", current: false },
+    {
+      name: "Notifications",
+      category: "notifications",
+      href: "#",
+      current: false,
+    },
+    { name: "Plan", category: "plan", href: "#", current: true },
+    { name: "Billing", category: "billing", href: "#", current: false },
+    { name: "Team", category: "team", href: "#", current: false },
+  ]);
+
+  const [tabSelect, setTabSelect] = useState("nextjs");
+
   const [selectedPerson, setSelectedPerson] = useState();
 
   const [people, setPeople] = useState([]);
@@ -76,7 +85,7 @@ export default function Example() {
   const [des, setDes] = useState();
 
   useEffect(() => {
-    handleGetProfileClick();
+    handleGetProfileClick(tabSelect);
   }, []);
 
   useEffect(() => {
@@ -103,10 +112,10 @@ export default function Example() {
   const [autoUpdateApplicantDataEnabled, setAutoUpdateApplicantDataEnabled] =
     useState(false);
 
-  async function handleGetProfileClick() {
+  async function handleGetProfileClick(tabSelect) {
     try {
-      const data = await authApi.getProfile();
-
+      const data = await authApi.getProfile(tabSelect);
+      search.value = "";
       //console.log(data); // Thấy data
       setPeople(data);
       //console.log(people); // Không thấy data
@@ -120,13 +129,13 @@ export default function Example() {
     try {
       await authApi.addProduct({
         name: title.value,
-        category: "nextjs",
+        category: tabSelect,
         content: des,
         link: link.value,
         note: note.value,
       });
       handleResetClick();
-      handleGetProfileClick();
+      handleGetProfileClick(tabSelect);
     } catch (error) {
       console.log("failed to login", error);
     }
@@ -145,7 +154,7 @@ export default function Example() {
       await authApi.editProduct(
         {
           name: title.value,
-          category: "nextjs",
+          category: tabSelect,
           content: des,
           link: link.value,
           note: note.value,
@@ -153,7 +162,7 @@ export default function Example() {
         selectedPerson.id
       );
       handleResetClick();
-      handleGetProfileClick();
+      handleGetProfileClick(tabSelect);
     } catch (error) {
       console.log("failed to login", error);
     }
@@ -163,7 +172,7 @@ export default function Example() {
     try {
       await authApi.deleteProduct(selectedPerson.id);
       handleResetClick();
-      handleGetProfileClick();
+      handleGetProfileClick(tabSelect);
     } catch (error) {
       console.log("failed to login", error);
     }
@@ -455,6 +464,54 @@ export default function Example() {
                 <div className="pt-0 pb-16">
                   <div className="px-4 sm:px-6 md:px-0">
                     <div className="py-0">
+                      <div className="lg:hidden">
+                        <label htmlFor="selected-tab" className="sr-only">
+                          Select a tab
+                        </label>
+                        <select
+                          id="selected-tab"
+                          name="selected-tab"
+                          className="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-purple-500 focus:outline-none focus:ring-purple-500 sm:text-sm"
+                          defaultValue={tabs.find((tab) => tab.current).name}
+                        >
+                          {tabs.map((tab) => (
+                            <option key={tab.name}>{tab.name}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="hidden lg:block">
+                        <div className="border-b border-gray-200">
+                          <nav className="-mb-px flex space-x-8">
+                            {tabs.map((tab) => (
+                              <a
+                                onClick={() => {
+                                  setTabSelect(tab.category);
+                                  handleGetProfileClick(tab.category);
+                                  setTabs(
+                                    tabs.map((p) =>
+                                      p.category === tab.category
+                                        ? { ...p, current: true }
+                                        : { ...p, current: false }
+                                    )
+                                  );
+                                }}
+                                key={tab.name}
+                                href={tab.href}
+                                className={classNames(
+                                  tab.current
+                                    ? "border-purple-500 text-purple-600"
+                                    : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700",
+                                  "whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
+                                )}
+                              >
+                                {tab.name}
+                              </a>
+                            ))}
+                          </nav>
+                        </div>
+                      </div>
+
                       {/* Description list with inline editing */}
                       <div className="mt-10 divide-y divide-gray-200">
                         <div className="space-y-1">

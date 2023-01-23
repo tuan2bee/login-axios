@@ -22,7 +22,7 @@ export const authApi = {
     return axiosClient.post("/logout");
   },
 
-  getProfile() {
-    return axiosClient.get("/products");
+  getProfile(tabSelect: string) {
+    return axiosClient.get("/products?category=" + tabSelect);
   },
 };

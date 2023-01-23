@@ -44,7 +44,7 @@ export default function handler(
             (res as NextApiResponse).status(401).json({ message: message });
           } else {
             var date = new Date();
-            date.setDate(date.getDate() + 1);
+            date.setDate(date.getDate() + 10);
             // convert token to cookies
             const cookies = new Cookies(req, res, {
               secure: process.env.NODE_ENV !== "development",
