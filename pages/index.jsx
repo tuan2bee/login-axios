@@ -62,7 +62,7 @@ export default function Example() {
   const [query, setQuery] = useState("");
 
   const [tabs, setTabs] = useState([
-    { name: "Next JS", category: "nextjs", href: "#", current: false },
+    { name: "Next JS", category: "nextjs", href: "#", current: true },
     { name: "Password", category: "password", href: "#", current: false },
     {
       name: "Notifications",
@@ -70,7 +70,7 @@ export default function Example() {
       href: "#",
       current: false,
     },
-    { name: "Plan", category: "plan", href: "#", current: true },
+    { name: "Plan", category: "plan", href: "#", current: false },
     { name: "Billing", category: "billing", href: "#", current: false },
     { name: "Team", category: "team", href: "#", current: false },
   ]);
@@ -115,7 +115,7 @@ export default function Example() {
   async function handleGetProfileClick(tabSelect) {
     try {
       const data = await authApi.getProfile(tabSelect);
-      search.value = "";
+      handleResetClick();
       //console.log(data); // Thấy data
       setPeople(data);
       //console.log(people); // Không thấy data
@@ -154,7 +154,7 @@ export default function Example() {
       await authApi.editProduct(
         {
           name: title.value,
-          category: tabSelect,
+          category: tabName.value,
           content: des,
           link: link.value,
           note: note.value,
@@ -522,6 +522,33 @@ export default function Example() {
                         </div>
                         <div className="mt-6">
                           <dl className="divide-y divide-gray-200">
+                            <div className="py-4 sm:grid sm:grid-cols-4 sm:gap-4 sm:py-5">
+                              <dt className="text-sm font-medium text-gray-500">
+                                Category
+                              </dt>
+
+                              <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-3 sm:mt-0">
+                                <select
+                                  id="tabName"
+                                  name="tabName"
+                                  className="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-purple-500 focus:outline-none focus:ring-purple-500 sm:text-sm"
+                                  defaultValue={
+                                    tabs.find((tab) => tab.current).category
+                                  }
+                                >
+                                  {tabs.map((tab) => (
+                                    <option
+                                      selected={tab.current ? "selected" : ""}
+                                      key={tab.category}
+                                      value={tab.category}
+                                    >
+                                      {tab.name}
+                                    </option>
+                                  ))}
+                                </select>
+                              </dd>
+                            </div>
+
                             <div className="py-4 sm:grid sm:grid-cols-4 sm:gap-4 sm:py-5">
                               <dt className="text-sm font-medium text-gray-500">
                                 Title
