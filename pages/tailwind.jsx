@@ -62,7 +62,7 @@ export default function Example() {
   const [query, setQuery] = useState("");
 
   const [tabs, setTabs] = useState([
-    { name: "Coding", category: "coding", href: "#", current: true },
+    { name: "Css", category: "css", href: "#", current: true },
     { name: "Password", category: "password", href: "#", current: false },
     {
       name: "Notifications",
@@ -87,7 +87,7 @@ export default function Example() {
     );
   };
 
-  const [tabSelect, setTabSelect] = useState("coding");
+  const [tabSelect, setTabSelect] = useState("css");
 
   const [selectedPerson, setSelectedPerson] = useState();
 
