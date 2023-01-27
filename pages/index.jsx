@@ -1,6 +1,8 @@
 import { useRouter } from "next/router";
 import { Fragment, useState, useEffect } from "react";
 import { Dialog, Switch, Transition } from "@headlessui/react";
+import Image from "next/future/image";
+import logo from "@/public/logo.png";
 import {
   ArrowLeftOnRectangleIcon,
   Bars3BottomLeftIcon,
@@ -268,10 +270,13 @@ export default function Example() {
                     </div>
                   </Transition.Child>
                   <div className="flex flex-shrink-0 items-center px-4">
-                    <img
-                      className="h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/mark.svg?color=purple&shade=600"
-                      alt="Easywire"
+                    <Image
+                      src={logo}
+                      alt="XYLOO TECH"
+                      width={199}
+                      height={39}
+                      unoptimized
+                      priority
                     />
                   </div>
                   <div className="mt-5 h-0 flex-1 overflow-y-auto">
@@ -334,10 +339,13 @@ export default function Example() {
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <nav className="flex flex-grow flex-col overflow-y-auto border-r border-gray-200 bg-gray-50 pt-5 pb-4">
             <div className="flex flex-shrink-0 items-center px-4">
-              <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=purple&shade=600"
-                alt="Easywire"
+              <Image
+                src={logo}
+                alt="XYLOO TECH"
+                width={199}
+                height={39}
+                unoptimized
+                priority
               />
             </div>
             <div className="mt-5 flex-grow">
