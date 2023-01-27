@@ -62,7 +62,7 @@ export default function Example() {
   const [query, setQuery] = useState("");
 
   const [tabs, setTabs] = useState([
-    { name: "Next JS", category: "nextjs", href: "#", current: true },
+    { name: "Coding", category: "coding", href: "#", current: true },
     { name: "Password", category: "password", href: "#", current: false },
     {
       name: "Notifications",
@@ -87,7 +87,7 @@ export default function Example() {
     );
   };
 
-  const [tabSelect, setTabSelect] = useState("nextjs");
+  const [tabSelect, setTabSelect] = useState("coding");
 
   const [selectedPerson, setSelectedPerson] = useState();
 
